@@ -31,6 +31,7 @@ export default function CoursePage() {
   const [comment, setComment] = useState("")
   const [load, setLoad] = useState(false)
   const [videoHeight, setVideoHeight] = useState<number | null>(null)
+  const [isMobile, setIsMobile] = useState(false)
   const videoRef = useRef<HTMLDivElement>(null)
 
   const sendComment = (comment: string) => {
@@ -45,11 +46,17 @@ export default function CoursePage() {
 
   useEffect(() => {
     const updateVideoHeight = () => {
-      if (videoRef.current) {
+      const isMobileView = window.innerWidth < 640
+      setIsMobile(isMobileView)
+      
+      if (videoRef.current && isMobileView) {
         const height = videoRef.current.offsetHeight
         setVideoHeight(height)
+      } else {
+        setVideoHeight(null)
       }
     }
+
     updateVideoHeight()
     window.addEventListener("resize", updateVideoHeight)
 
@@ -61,12 +68,15 @@ export default function CoursePage() {
         attributes: true,
       })
     }
+    
     const timeout = setTimeout(updateVideoHeight, 100)
+    const timeout2 = setTimeout(updateVideoHeight, 500)
 
     return () => {
       window.removeEventListener("resize", updateVideoHeight)
       observer.disconnect()
       clearTimeout(timeout)
+      clearTimeout(timeout2)
     }
   }, [])
 
@@ -133,7 +143,7 @@ export default function CoursePage() {
             id="content" 
             className="px-3 pt-5 lg:pt-0 lg:top-0 block lg:hidden"
             style={{
-              scrollMarginTop: videoHeight ? `${videoHeight}px` : '242px'
+              scrollMarginTop: isMobile && videoHeight ? `${videoHeight}px` : '0'
             }}
           >
             <Header text="Topics for This Course" />
@@ -148,7 +158,7 @@ export default function CoursePage() {
             id="comments" 
             className="pt-5 px-3"
             style={{
-              scrollMarginTop: videoHeight ? `${videoHeight}px` : '242px'
+              scrollMarginTop: isMobile && videoHeight ? `${videoHeight}px` : '0'
             }}
           >
             <Header text="Comments" />
