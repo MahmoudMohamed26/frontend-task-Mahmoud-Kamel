@@ -91,7 +91,7 @@ export default function CoursePage() {
           </section>
 
           {/* --- Course Materials --- */}
-          <section id="content" className="pt-5 px-3">
+          <section className="pt-5 px-3">
             <Header text="Course Materials" />
             <CourseMaterials data={course} />
           </section>
@@ -100,13 +100,13 @@ export default function CoursePage() {
           <aside className="px-3 lg:top-0 block lg:hidden">
             <Header text="Topics for This Course" />
             <ProgressBar progress={63} />
-            <div className="pt-5">
+            <div id="content" className="pt-5 scroll-mt-[242px] sm:scroll-mt-0">
               <CourseContent />
             </div>
           </aside>
 
           {/* --- Comments --- */}
-          <section id="comments" className="pt-5 px-3">
+          <section id="comments" className="pt-5 px-3 scroll-mt-[242px] sm:scroll-mt-0">
             <Header text="Comments" />
             <CourseComments />
             <Textarea
