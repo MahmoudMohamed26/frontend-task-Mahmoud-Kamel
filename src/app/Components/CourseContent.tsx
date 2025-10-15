@@ -64,7 +64,7 @@ export default function CourseContent() {
             value={`item-${groupIndex + 1}`}
           >
             <AccordionTrigger className="p-6">
-              Week {group.duration}
+              {group.header}
             </AccordionTrigger>
 
             <AccordionContent className="text-sm p-3 lg:p-6 lg:pt-0 pt-0 text-[#666]">

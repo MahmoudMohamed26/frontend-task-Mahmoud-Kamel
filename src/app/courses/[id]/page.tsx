@@ -13,7 +13,7 @@ import {
 import CourseNavLink from "@/app/Components/CourseNavLink"
 import QuestionDialog from "@/app/Components/QuestionDialog"
 import LeaderboardDialog from "@/app/Components/LeaderboardDialog"
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react"
 import Header from "@/app/Components/Header"
 import CourseMaterials from "@/app/Components/CourseMaterials"
 import { course } from "@/data/course-data"
@@ -30,6 +30,8 @@ export default function CoursePage() {
   const [leaderboardDialogOpen, setLeaderboardDialogOpen] = useState(false)
   const [comment, setComment] = useState("")
   const [load, setLoad] = useState(false)
+  const [videoHeight, setVideoHeight] = useState<number | null>(null)
+  const videoRef = useRef<HTMLDivElement>(null)
 
   const sendComment = (comment: string) => {
     setLoad(true)
@@ -40,6 +42,33 @@ export default function CoursePage() {
       console.log("Comment sent: ", comment)
     }, 1000)
   }
+
+  useEffect(() => {
+    const updateVideoHeight = () => {
+      if (videoRef.current) {
+        const height = videoRef.current.offsetHeight
+        setVideoHeight(height)
+      }
+    }
+    updateVideoHeight()
+    window.addEventListener("resize", updateVideoHeight)
+
+    const observer = new MutationObserver(updateVideoHeight)
+    if (videoRef.current) {
+      observer.observe(videoRef.current, {
+        childList: true,
+        subtree: true,
+        attributes: true,
+      })
+    }
+    const timeout = setTimeout(updateVideoHeight, 100)
+
+    return () => {
+      window.removeEventListener("resize", updateVideoHeight)
+      observer.disconnect()
+      clearTimeout(timeout)
+    }
+  }, [])
 
   return (
     <>
@@ -60,7 +89,10 @@ export default function CoursePage() {
         {/* Left side (Video + rest of sections) */}
         <div className="grid grid-rows-[auto_auto_auto_auto] gap-8">
           {/* --- Video Section --- */}
-          <section className="sticky sm:static top-0 z-10 md:px-3">
+          <section 
+            ref={videoRef}
+            className="sticky sm:static top-0 z-10 md:px-3"
+          >
             <Video src={course.url} poster={coursePoster} />
           </section>
 
@@ -97,7 +129,13 @@ export default function CoursePage() {
           </section>
 
           {/* Right-hand side (Topics, progress) Mobile */}
-          <aside id="content" className="px-3 pt-5 lg:pt-0 lg:top-0 block lg:hidden scroll-mt-[242px] sm:scroll-mt-0">
+          <aside 
+            id="content" 
+            className="px-3 pt-5 lg:pt-0 lg:top-0 block lg:hidden"
+            style={{
+              scrollMarginTop: videoHeight ? `${videoHeight}px` : '242px'
+            }}
+          >
             <Header text="Topics for This Course" />
             <ProgressBar progress={63} />
             <div className="pt-5">
@@ -106,7 +144,13 @@ export default function CoursePage() {
           </aside>
 
           {/* --- Comments --- */}
-          <section id="comments" className="pt-5 px-3 scroll-mt-[242px] sm:scroll-mt-0">
+          <section 
+            id="comments" 
+            className="pt-5 px-3"
+            style={{
+              scrollMarginTop: videoHeight ? `${videoHeight}px` : '242px'
+            }}
+          >
             <Header text="Comments" />
             <CourseComments />
             <Textarea

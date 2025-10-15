@@ -18,14 +18,14 @@ type CourseContentItem = QuizContent | PdfContent;
 
 type CourseGroup = {
   id: number
-  duration: string;
+  header: string;
   content: CourseContentItem[];
 };
 
 export const courseContent: CourseGroup[] = [
   {
     id: 1,
-    duration: "1-4",
+    header: "Course Introduction",
     content: [
       { id: 1, title: "Introduction to Programming", access: true, type: "pdf" },
       { id: 2, title: "Getting Started Quiz", access: true, type: "quiz", questions: 5, time: 10 },
@@ -37,7 +37,7 @@ export const courseContent: CourseGroup[] = [
   },
   {
     id: 2,
-    duration: "5-8",
+    header: "JavaScript Language Basics",
     content: [
       { id: 7, title: "Objects and Arrays", access: false, type: "pdf" },
       { id: 8, title: "Objects Quiz", access: false, type: "quiz", questions: 10, time: 20 },
@@ -49,7 +49,7 @@ export const courseContent: CourseGroup[] = [
   },
   {
     id: 3,
-    duration: "9-12",
+    header: "DOM & Review",
     content: [
       { id: 13, title: "DOM Manipulation", access: false, type: "pdf" },
       { id: 14, title: "DOM Quiz", access: false, type: "quiz", questions: 10, time: 20 },
