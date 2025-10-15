@@ -27,10 +27,10 @@ type QuizDialogProps = {
   quizId: number | null
 }
 
-const quizData: Quiz[] = [
+export const quizData = [
   {
     id: 2,
-    time: 2,
+    time: 10,
     questions: [
       {
         id: 1,
@@ -45,10 +45,28 @@ const quizData: Quiz[] = [
       },
       {
         id: 2,
-        question: "Which keyword is used to declare a variable in JavaScript?",
-        options: ["var", "const", "let", "All of the above"],
-        answer: "All of the above",
+        question:
+          "Which keyword is used to declare a block-scoped variable in JavaScript?",
+        options: ["var", "let", "const", "function"],
+        answer: "let",
       },
+      {
+        id: 3,
+        question: "Which of the following is NOT a JavaScript data type?",
+        options: ["String", "Number", "Boolean", "Character"],
+        answer: "Character",
+      },
+      {
+        id: 4,
+        question: "How do you define a function in JavaScript?",
+        options: [
+          "function myFunction() {}",
+          "def myFunction() {}",
+          "func myFunction() {}",
+          "function:myFunction() {}",
+        ],
+        answer: "function myFunction() {}",
+      }
     ],
   },
 ]
@@ -137,7 +155,7 @@ export default function QuizDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-3xl border-none bg-gradient-to-br from-[#445DC4] to-[#3D53B3] h-full sm:h-[800px] overflow-y-auto">
+      <DialogContent className="max-w-3xl border-none bg-gradient-to-br from-[#445DC4] to-[#2e3e84] h-full sm:h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-2xl m-auto py-2 px-8 w-fit rounded-lg bg-[#FBD500] special-shadow-yellow">
             <div className="flex text-white items-center gap-2">
@@ -151,13 +169,27 @@ export default function QuizDialog({
 
         {!quizCompleted ? (
           <div className="space-y-6">
-            <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-              <div className="text-sm text-[#445DC4]">
-                Question {currentQuestion + 1} of {quiz.questions.length}
+            <div className="w-full overflow-x-auto">
+              <div className="flex justify-center gap-2 mb-6 px-4 pb-2 min-w-max">
+                {quiz.questions.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentQuestion(index)}
+                    className={`w-14 h-14 rounded-full border-2 flex items-center justify-center text-lg font-semibold transition-all flex-shrink-0 ${
+                      index === currentQuestion
+                        ? "bg-white text-[#445DC4] border-white"
+                        : selectedAnswers[index]
+                        ? "bg-[#445DC4] text-white border-white"
+                        : "bg-transparent text-white border-white"
+                    }`}
+                  >
+                    {index + 1}
+                  </button>
+                ))}
               </div>
             </div>
 
-            <div className="space-y-8 bg-white px-6 py-16 rounded-2xl">
+            <div className="space-y-8 bg-white px-6 py-10 rounded-2xl">
               <h3 className="text-lg font-semibold">{currentQ.question}</h3>
 
               <div className="space-y-8">
@@ -200,21 +232,6 @@ export default function QuizDialog({
                 Previous
               </Button>
 
-              <div className="flex gap-2">
-                {quiz.questions.map((_, index) => (
-                  <div
-                    key={index}
-                    className={`w-2 h-2 rounded-full ${
-                      selectedAnswers[index]
-                        ? "bg-[#445DC4]"
-                        : index === currentQuestion
-                        ? "bg-gray-400"
-                        : "bg-gray-200"
-                    }`}
-                  />
-                ))}
-              </div>
-
               {currentQuestion === quiz.questions.length - 1 ? (
                 <Button
                   onClick={handleSubmitQuiz}
@@ -235,15 +252,15 @@ export default function QuizDialog({
             </div>
           </div>
         ) : (
-          <div className="text-center space-y-6 py-8">
-            <CheckCircle2 className="mx-auto text-[#40B7B7]" size={64} />
+          <div className="text-center space-y-6 text-white py-8">
+            <CheckCircle2 className="mx-auto" size={64} />
             <div>
               <h3 className="text-2xl font-bold mb-2">Quiz Completed!</h3>
-              <p className="text-gray-600">Your Results</p>
+              <p className="">Your Results</p>
             </div>
 
             <div className="bg-gray-50 rounded-lg p-6 space-y-2">
-              <div className="text-5xl font-bold text-[#40B7B7]">
+              <div className="text-5xl font-bold text-[#445DC4]">
                 {score}/{quiz.questions.length}
               </div>
               <p className="text-gray-600">
@@ -253,7 +270,7 @@ export default function QuizDialog({
 
             <Button
               onClick={() => onOpenChange(false)}
-              className="bg-[#40B7B7] hover:bg-[#359999]"
+              className="bg-white text-[#445DC4] hover:bg-[#e4e4e4]"
             >
               Close
             </Button>
