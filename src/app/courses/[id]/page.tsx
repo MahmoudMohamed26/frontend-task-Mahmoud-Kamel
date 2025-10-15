@@ -97,10 +97,10 @@ export default function CoursePage() {
           </section>
 
           {/* Right-hand side (Topics, progress) Mobile */}
-          <aside className="px-3 lg:top-0 block lg:hidden">
+          <aside id="content" className="px-3 pt-5 lg:pt-0 lg:top-0 block lg:hidden scroll-mt-[242px] sm:scroll-mt-0">
             <Header text="Topics for This Course" />
             <ProgressBar progress={63} />
-            <div id="content" className="pt-5 scroll-mt-[242px] sm:scroll-mt-0">
+            <div className="pt-5">
               <CourseContent />
             </div>
           </aside>
