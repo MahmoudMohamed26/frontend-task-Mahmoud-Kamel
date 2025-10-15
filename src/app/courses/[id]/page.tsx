@@ -141,7 +141,7 @@ export default function CoursePage() {
         </aside>
       </main>
 
-      <footer className="text-center py-5 mt-5 bg-[var(--main-bg-color)]">
+      <footer className="text-center py-5 mt-15 text-sm text-[#666] bg-[var(--main-bg-color)]">
         Developed By Mahmoud Kamel ♥
       </footer>
 

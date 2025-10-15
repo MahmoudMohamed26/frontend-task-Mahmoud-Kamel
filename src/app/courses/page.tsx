@@ -1,11 +1,6 @@
-import Breadcrumbs from "./Components/Breadcrumbs"
+import Breadcrumbs from "../Components/Breadcrumbs"
 
-export default function Home() {
-  const data = [
-    {
-      title: "Stating SEO as your Home",
-    },
-  ]
+export default function Courses() {
   return (
     <>
       <nav className="bg-[var(--main-bg-color)] py-6">

@@ -14,6 +14,14 @@
   box-shadow: 0 0 20px #00000010;
 }
 
+.special-shadow-yellow {
+  box-shadow: rgba(251, 213, 0, 0.2) 0px 7px 29px 0px;
+}
+
+.special-shadow-blue {
+  box-shadow: rgba(68, 93, 196, 0.2) 0px 7px 29px 0px;
+}
+
 :root{
   --main-color: #41B69D;
   --main-hover-color: #348d7a;
