@@ -1,7 +1,7 @@
 export default function ProgressBar({ progress }: { progress: number }) {
   return (
     <>
-      <div className="w-full bg-[#E6E7E7] rounded-full mt-17 relative h-1">
+      <div className="w-full bg-[#E6E7E7] mb-10 rounded-full mt-17 relative h-1">
         <div
           className={`absolute h-full bg-[var(--main-color)] rounded-full`}
           style={{ width: `${progress}%` }}

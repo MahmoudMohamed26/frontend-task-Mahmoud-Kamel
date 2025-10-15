@@ -50,56 +50,63 @@ export default function CoursePage() {
         </div>
       </nav>
 
-      <main className="container !mt-5 grid gap-15 grid-cols-6">
-        <div className="sticky col-span-6 lg:col-span-4 sm:static top-0 z-10 md:px-2">
-          <Video src={course.url} poster={coursePoster} />
-        </div>
+      <main
+        className="
+          container !mt-5 
+          grid grid-cols-1 lg:grid-cols-[2fr_1fr] 
+          auto-rows-max gap-6
+        "
+      >
+        {/* Left side (Video + rest of sections) */}
+        <div className="grid grid-rows-[auto_auto_auto_auto] gap-8">
+          {/* --- Video Section --- */}
+          <section className="sticky sm:static top-0 z-10 md:px-3">
+            <Video src={course.url} poster={coursePoster} />
+          </section>
 
-        {/* right hand side  */}
-        <section className="lg:col-span-2 col-span-6">
-          <div className="px-2">
-            <Header text="Topics for This Course" />
-            <div>
-              <ProgressBar progress={63} />
-            </div>
-          </div>
-          <div className="pt-5 mt-15 px-2">
-            <CourseContent />
-          </div>
-        </section>
-        {/* left hand side  */}
-        <section className="flex-1 min-h-screen col-span-6 lg:col-span-4">
-          {/* video player section */}
-          <ul className="flex gap-4 mt-8 px-2">
-            <CourseNavLink
-              title="Course Content"
-              href="#content"
-              Icon={BookOpenText}
-            />
-            <CourseNavLink
-              title="Course Comments"
-              href="#comments"
-              Icon={MessageCircle}
-            />
-            <CourseNavLink
-              title="Ask a Question"
-              Icon={CircleQuestionMark}
-              onClick={() => setQuestionDialogOpen(true)}
-            />
-            <CourseNavLink
-              title="View Leaderboard"
-              Icon={Medal}
-              onClick={() => setLeaderboardDialogOpen(true)}
-            />
-          </ul>
+          {/* --- Navigation --- */}
+          <section>
+            <ul className="flex flex-wrap gap-4 px-3">
+              <CourseNavLink
+                title="Course Content"
+                href="#content"
+                Icon={BookOpenText}
+              />
+              <CourseNavLink
+                title="Course Comments"
+                href="#comments"
+                Icon={MessageCircle}
+              />
+              <CourseNavLink
+                title="Ask a Question"
+                Icon={CircleQuestionMark}
+                onClick={() => setQuestionDialogOpen(true)}
+              />
+              <CourseNavLink
+                title="View Leaderboard"
+                Icon={Medal}
+                onClick={() => setLeaderboardDialogOpen(true)}
+              />
+            </ul>
+          </section>
 
-          {/* course Materials section  */}
-          <div id="content" className="pt-10 mt-5 px-2">
+          {/* --- Course Materials --- */}
+          <section id="content" className="pt-5 px-3">
             <Header text="Course Materials" />
             <CourseMaterials data={course} />
-          </div>
+          </section>
 
-          <div id="comments" className="pt-10 mt-5 px-2">
+          {/* Right-hand side (Topics, progress) Mobile */}
+          <aside className="px-3 lg:top-0 block lg:hidden">
+            <Header text="Topics for This Course" />
+            <ProgressBar progress={63} />
+            <div className="pt-5">
+              <CourseContent />
+            </div>
+          </aside>
+
+          {/* --- Comments --- */}
+          <section id="comments" className="pt-5 px-3">
             <Header text="Comments" />
             <CourseComments />
             <Textarea
@@ -121,15 +128,27 @@ export default function CoursePage() {
                 </>
               )}
             </Button>
+          </section>
+        </div>
+
+        {/* Right-hand side (Topics, progress) wide */}
+        <aside className="px-3 lg:top-0 hidden lg:block">
+          <Header text="Topics for This Course" />
+          <ProgressBar progress={63} />
+          <div className="pt-5">
+            <CourseContent />
           </div>
-        </section>
+        </aside>
       </main>
+
+      <footer className="text-center py-5 mt-5 bg-[var(--main-bg-color)]">
+        Developed By Mahmoud Kamel ♥
+      </footer>
 
       <QuestionDialog
         open={questionDialogOpen}
         onOpenChange={setQuestionDialogOpen}
       />
-
       <LeaderboardDialog
         open={leaderboardDialogOpen}
         title={course.title}
