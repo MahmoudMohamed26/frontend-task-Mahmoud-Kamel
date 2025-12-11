@@ -1,3 +1,4 @@
+import Link from "next/link"
 import Breadcrumbs from "./Components/Breadcrumbs"
 
 export default function Home() {
@@ -17,12 +18,12 @@ export default function Home() {
         <p>No Content here :)</p>
         <p>
           Navigate to{" "}
-          <a
+          <Link
             className="hover:underline text-[var(--main-color)]"
             href="/courses/12"
           >
             Task
-          </a>
+          </Link>
         </p>
       </div>
     </>

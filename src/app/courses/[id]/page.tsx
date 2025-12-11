@@ -24,7 +24,6 @@ import { toast } from "sonner"
 import BtnLoad from "@/app/Components/ButtonLoad"
 import ProgressBar from "@/app/Components/ProgressBar"
 import CourseContent from "@/app/Components/CourseContent"
-
 export default function CoursePage() {
   const [questionDialogOpen, setQuestionDialogOpen] = useState(false)
   const [leaderboardDialogOpen, setLeaderboardDialogOpen] = useState(false)
